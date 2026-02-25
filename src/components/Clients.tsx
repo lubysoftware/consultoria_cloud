@@ -1,15 +1,15 @@
-import siemens from "@/assets/clients/siemens.png";
-import caliber from "@/assets/clients/caliber.png";
-import dci from "@/assets/clients/dci.png";
-import foxtrot from "@/assets/clients/foxtrot.png";
-import gigpay from "@/assets/clients/gigpay.png";
-import interco from "@/assets/clients/interco.png";
-import masspay from "@/assets/clients/masspay.png";
-import neocova from "@/assets/clients/neocova.png";
-import onlineIps from "@/assets/clients/online-ips.png";
-import papaya from "@/assets/clients/papaya.png";
-import sunwestBank from "@/assets/clients/sunwest-bank.png";
-import usend from "@/assets/clients/usend.png";
+import multi from "@/assets/clients/multi.png";
+import universal from "@/assets/clients/universal.png";
+import assefaz from "@/assets/clients/assefaz.png";
+import ciee from "@/assets/clients/ciee.png";
+import queroConhecer from "@/assets/clients/quero-conhecer.png";
+import fundacaoLemann from "@/assets/clients/fundacao-lemann.png";
+import toyota from "@/assets/clients/toyota.png";
+import celcoin from "@/assets/clients/celcoin.png";
+import prevent from "@/assets/clients/prevent-senior.png";
+import safrapay from "@/assets/clients/safrapay.png";
+import arredondar from "@/assets/clients/arredondar.png";
+import vitacon from "@/assets/clients/vitacon.png";
 
 const stats = [
   { value: "+20", label: "anos de experiência" },
@@ -19,18 +19,18 @@ const stats = [
 ];
 
 const clients = [
-  { name: "Siemens", logo: siemens },
-  { name: "Caliber", logo: caliber },
-  { name: "DCI", logo: dci },
-  { name: "Foxtrot", logo: foxtrot },
-  { name: "GigPay", logo: gigpay },
-  { name: "Interco", logo: interco },
-  { name: "MassPay", logo: masspay },
-  { name: "Neocova", logo: neocova },
-  { name: "Online IPS", logo: onlineIps },
-  { name: "Papaya", logo: papaya },
-  { name: "Sunwest Bank", logo: sunwestBank },
-  { name: "Usend", logo: usend },
+  { name: "Multi", logo: multi },
+  { name: "Universal", logo: universal },
+  { name: "Assefaz", logo: assefaz },
+  { name: "CIEE", logo: ciee },
+  { name: "Quero te conhecer", logo: queroConhecer },
+  { name: "Fundação Lemann", logo: fundacaoLemann },
+  { name: "Toyota", logo: toyota },
+  { name: "Celcoin", logo: celcoin },
+  { name: "Prevent", logo: prevent },
+  { name: "Safrapay", logo: safrapay },
+  { name: "Arredondar", logo: arredondar },
+  { name: "Vitacon", logo: vitacon },
 ];
 
 export const Clients = () => {
