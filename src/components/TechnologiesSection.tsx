@@ -78,7 +78,7 @@ export const TechnologiesSection = ({ technologies }: TechnologiesSectionProps) 
         </div>
 
         <div className="text-center">
-          <p className="text-muted-foreground">E muito mais…</p>
+          <p className="text-muted-foreground">E mais ferramentas do ecossistema cloud.</p>
         </div>
       </div>
     </section>

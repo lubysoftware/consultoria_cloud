@@ -144,18 +144,18 @@ export const landingConfig: LandingConfig = {
   hero: {
     backgroundImage: "hero-bg.png",
     badge: "Consultoria Cloud",
-    title: "Leve sua nuvem para um nível previsível de segurança, custo e confiabilidade",
+    title: "Segurança, custo e confiabilidade previsíveis na sua nuvem",
     titleHighlight: "",
-    subtitle: "A Luby ajuda sua empresa a migrar, modernizar e operar na nuvem com governança desde o início, controle de custos e padrões de produção que evitam surpresas depois do go live.",
+    subtitle: "A Luby ajuda sua empresa a migrar, modernizar e operar na nuvem com governança desde o início, controle de custos e padrões de produção — sem surpresas após o go-live.",
     subtitleHighlight: "",
     benefits: [
-      "Arquitetura cloud alinhada com boas práticas e padrões de entrega",
+      "Arquitetura cloud com boas práticas e padrões de entrega",
       "Landing zone, identidade, redes e segurança por design",
       "Migração e modernização em fases, com cutover controlado",
       "FinOps e otimização de custo com visibilidade por produto e time",
       "Operação confiável com observabilidade e runbooks",
     ],
-    ctaPrimary: "Solicitar sessão de estratégia Cloud",
+    ctaPrimary: "Quero minha sessão de estratégia Cloud",
     ctaSecondary: "Ver como funciona",
   },
   
@@ -163,7 +163,7 @@ export const landingConfig: LandingConfig = {
     label: "Dores de consultoria cloud",
     title: "A nuvem é poderosa. Sem governança, ",
     titleHighlight: "vira custo e risco mais rápido do que você imagina",
-    description: "Os problemas raramente são da AWS, Google Cloud ou Azure. Normalmente são falta de base, decisões sem padrão e um modelo operacional que não foi pensado para crescer.",
+    description: "Na maioria das vezes o problema não é a AWS, o Google Cloud ou o Azure. É a falta de base, decisões sem padrão e um modelo operacional que não foi pensado para crescer.",
     items: [
       {
         title: "Custo cresce sem dono",
@@ -182,7 +182,7 @@ export const landingConfig: LandingConfig = {
         description: "Medo de downtime, cutover incerto e rollback frágil travam a decisão.",
       },
       {
-        title: "Confiabilidade não é projetada",
+        title: "Confiabilidade não foi planejada",
         description: "Incidentes se repetem porque resiliência e recuperação não foram desenhadas.",
       },
       {
@@ -202,7 +202,7 @@ export const landingConfig: LandingConfig = {
         description: "Conhecimento fica tribal e cada workload novo repete o mesmo erro.",
       },
     ],
-    cta: "Ver o que dá para arrumar primeiro",
+    cta: "Descobrir por onde começar",
   },
   
   howItWorks: {
@@ -239,7 +239,7 @@ export const landingConfig: LandingConfig = {
   },
   
   useCases: {
-    label: "Use cases",
+    label: "Onde atuamos",
     title: "Trabalho de cloud que destrava migração, modernização e operação",
     titleHighlight: "",
     items: [
@@ -287,11 +287,11 @@ export const landingConfig: LandingConfig = {
   },
   
   whyLuby: {
-    label: "Por que Luby",
+    label: "Por que a Luby",
     title: "Cloud dá certo quando arquitetura, segurança e custo são desenhados juntos",
     titleHighlight: "",
     description: "Não é sobre colocar um selo de parceiro na apresentação. É sobre reduzir risco com padrão, executar em fases com previsibilidade e deixar seu time com um modelo operacional que funciona no dia a dia.",
-    cta: "Falar com um especialista em Cloud",
+    cta: "Falar com um especialista",
     differentials: [
       {
         title: "Base cloud pensada antes do sprawl",
@@ -334,7 +334,7 @@ export const landingConfig: LandingConfig = {
   
   deliveries: {
     label: "Entregáveis",
-    title: "Entregáveis que deixam sua cloud segura, operável e com custo controlado",
+    title: "Entregáveis que deixam sua cloud segura, operável e com custo sob controle",
     titleHighlight: "",
     image: "deliveries.png",
     items: [
@@ -397,12 +397,12 @@ export const landingConfig: LandingConfig = {
   },
   
   faq: {
-    label: "Perguntas frequentes sobre Consultoria Cloud",
+    label: "Dúvidas frequentes",
     title: "Perguntas frequentes sobre Consultoria Cloud",
     titleHighlight: "",
     items: [
       {
-        question: "O que significa contratar uma consultoria cloud na prática",
+        question: "O que significa contratar uma consultoria cloud, na prática?",
         answer: "É ter um time que mapeia seu ambiente, desenha padrões e executa mudanças com controle, pensando em segurança, custo, confiabilidade e operação, não só em infraestrutura.",
       },
       {
@@ -438,8 +438,8 @@ export const landingConfig: LandingConfig = {
         answer: "Sim. A entrega inclui documentação, templates, runbooks e práticas operacionais para sustentar o ambiente no dia a dia.",
       },
       {
-        question: "Qual é o primeiro passo",
-        answer: "Começar pela sessão de estratégia cloud. Você sai com clareza de riscos, prioridades e um plano por fases para evoluir com controle.",
+        question: "Qual é o primeiro passo?",
+        answer: "A sessão de estratégia Cloud. Você sai com clareza sobre riscos, prioridades e um plano por fases para evoluir com controle.",
       },
     ],
   },
