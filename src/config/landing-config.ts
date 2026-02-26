@@ -406,35 +406,35 @@ export const landingConfig: LandingConfig = {
         answer: "É ter um time que mapeia seu ambiente, desenha padrões e executa mudanças com controle, pensando em segurança, custo, confiabilidade e operação, não só em infraestrutura.",
       },
       {
-        question: "Vocês ajudam a escolher a arquitetura certa",
+        question: "Vocês ajudam a escolher a arquitetura certa?",
         answer: "Sim. Recomendamos o que faz sentido para seus workloads, maturidade do time e restrições, com tradeoffs claros e um plano por fases.",
       },
       {
-        question: "Dá para migrar sem grande downtime",
+        question: "Dá para migrar sem grande downtime?",
         answer: "Muitas vezes sim. Depende do sistema. A gente planeja validação, cutover por ondas e rollback quando necessário.",
       },
       {
-        question: "Precisa ter landing zone antes de migrar",
+        question: "Precisa ter landing zone antes de migrar?",
         answer: "Se você quer previsibilidade de governança e segurança, sim. Sem isso, o ambiente cresce sem padrão e o custo de conserto depois é maior.",
       },
       {
-        question: "Como vocês tratam IAM e risco de acessos",
+        question: "Como vocês tratam IAM e risco de acessos?",
         answer: "Com limites claros. Papéis por responsabilidade, segregação por ambiente, políticas, gestão de segredos e sinais de auditoria.",
       },
       {
-        question: "Como controlar custo na nuvem de verdade",
+        question: "Como controlar custo na nuvem de verdade?",
         answer: "Primeiro visibilidade e ownership. Depois tags, budgets, alocação, limites e um backlog de otimização por workload.",
       },
       {
-        question: "Vocês modernizam aplicações depois da migração",
+        question: "Vocês modernizam aplicações depois da migração?",
         answer: "Sim. Em muitos casos migrar reduz risco primeiro, e modernizar em seguida melhora velocidade, confiabilidade e custo.",
       },
       {
-        question: "Vocês trabalham junto com nosso time interno",
+        question: "Vocês trabalham junto com nosso time interno?",
         answer: "Sim. Entramos no seu fluxo, ajudamos a criar padrões e deixamos ownership claro para o time operar depois.",
       },
       {
-        question: "Vamos conseguir operar o que for entregue",
+        question: "Vamos conseguir operar o que for entregue?",
         answer: "Sim. A entrega inclui documentação, templates, runbooks e práticas operacionais para sustentar o ambiente no dia a dia.",
       },
       {
