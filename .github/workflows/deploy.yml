@@ -106,44 +106,61 @@ jobs:
 
       - name: Notify Discord - Success
         if: success()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          BRANCH: ${{ github.ref_name }}
+          COMMIT: ${{ github.sha }}
+          ACTOR: ${{ github.actor }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          REPO: ${{ github.repository }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RUN_NUMBER: ${{ github.run_number }}
         run: |
-          curl -H "Content-Type: application/json" \
-            -d '{
-              "embeds": [{
-                "title": "Deploy Concluido com Sucesso",
-                "description": "A aplicacao foi buildada e deployada com sucesso!",
-                "color": 3066993,
-                "fields": [
-                  {"name": "Branch", "value": "${{ github.ref_name }}", "inline": true},
-                  {"name": "Commit", "value": "${{ github.sha }}", "inline": true},
-                  {"name": "Autor", "value": "${{ github.actor }}", "inline": true},
-                  {"name": "Servidor", "value": "${{ secrets.SSH_HOST }}", "inline": true},
-                  {"name": "Caminho", "value": "${{ secrets.DEPLOY_PATH }}", "inline": true}
-                ],
-                "footer": {"text": "GitHub Actions"}
-              }]
-            }' \
-            ${{ secrets.DISCORD_WEBHOOK_URL }}
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            SHORT_SHA="${COMMIT:0:7}"
+            COMMIT_URL="${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+            PAYLOAD=$(jq -n \
+              --arg branch "$BRANCH" \
+              --arg actor "$ACTOR" \
+              --arg commit_msg "$COMMIT_MSG" \
+              --arg run_url "$RUN_URL" \
+              --arg commit_url "$COMMIT_URL" \
+              --arg short_sha "$SHORT_SHA" \
+              --arg run_number "#$RUN_NUMBER" \
+              --arg repo "$REPO" \
+              --arg deploy_path "$DEPLOY_PATH" \
+              '{embeds:[{title:"Deploy Concluido com Sucesso",description:("Repositorio: "+$repo),color:3066993,fields:[{name:"Branch",value:$branch,inline:true},{name:"Run",value:$run_number,inline:true},{name:"Autor",value:$actor,inline:true},{name:"Commit",value:("["+$short_sha+"]("+$commit_url+")"),inline:true},{name:"Caminho",value:$deploy_path,inline:true},{name:"Mensagem",value:$commit_msg,inline:false},{name:"Workflow",value:("[Ver logs]("+$run_url+")"),inline:false}],footer:{text:"GitHub Actions"}}]}')
+            curl -sS -H "Content-Type: application/json" -d "$PAYLOAD" "$DISCORD_WEBHOOK_URL"
+          fi
 
       - name: Notify Discord - Failure
         if: failure()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          BRANCH: ${{ github.ref_name }}
+          COMMIT: ${{ github.sha }}
+          ACTOR: ${{ github.actor }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RUN_NUMBER: ${{ github.run_number }}
         run: |
-          curl -H "Content-Type: application/json" \
-            -d '{
-              "embeds": [{
-                "title": "Deploy Falhou",
-                "description": "O deploy da aplicacao falhou. Verifique os logs.",
-                "color": 15158332,
-                "fields": [
-                  {"name": "Branch", "value": "${{ github.ref_name }}", "inline": true},
-                  {"name": "Commit", "value": "${{ github.sha }}", "inline": true},
-                  {"name": "Autor", "value": "${{ github.actor }}", "inline": true},
-                  {"name": "Workflow", "value": "[Ver logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})", "inline": false}
-                ],
-                "footer": {"text": "GitHub Actions"}
-              }]
-            }' \
-            ${{ secrets.DISCORD_WEBHOOK_URL }}
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            SHORT_SHA="${COMMIT:0:7}"
+            COMMIT_URL="${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+            PAYLOAD=$(jq -n \
+              --arg branch "$BRANCH" \
+              --arg actor "$ACTOR" \
+              --arg commit_msg "$COMMIT_MSG" \
+              --arg run_url "$RUN_URL" \
+              --arg commit_url "$COMMIT_URL" \
+              --arg short_sha "$SHORT_SHA" \
+              --arg run_number "#$RUN_NUMBER" \
+              --arg repo "$REPO" \
+              '{embeds:[{title:"Deploy Falhou",description:("Repositorio: "+$repo),color:15158332,fields:[{name:"Branch",value:$branch,inline:true},{name:"Run",value:$run_number,inline:true},{name:"Autor",value:$actor,inline:true},{name:"Commit",value:("["+$short_sha+"]("+$commit_url+")"),inline:true},{name:"Mensagem do commit",value:$commit_msg,inline:false},{name:"Ver logs",value:("[Clique aqui]("+$run_url+")"),inline:false}],footer:{text:"GitHub Actions"}}]}')
+            curl -sS -H "Content-Type: application/json" -d "$PAYLOAD" "$DISCORD_WEBHOOK_URL"
+          fi
 
   test:
     name: Test
@@ -173,7 +190,7 @@ jobs:
       - name: Install Playwright browsers
         run: bunx playwright install --with-deps chromium
 
-      - name: Run E2E tests (real API – URL de produção)
+      - name: Run E2E tests (real API - URL de producao)
         run: bun run test:e2e:real
         env:
           CI: "true"
@@ -186,42 +203,54 @@ jobs:
         if: success()
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          BRANCH: ${{ github.ref_name }}
+          COMMIT: ${{ github.sha }}
+          ACTOR: ${{ github.actor }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RUN_NUMBER: ${{ github.run_number }}
         run: |
           if [ -n "$DISCORD_WEBHOOK_URL" ]; then
-            curl -sS -H "Content-Type: application/json" -d '{
-              "embeds": [{
-                "title": "Testes concluídos com sucesso",
-                "description": "Todos os testes (unitários e E2E) passaram.",
-                "color": 3066993,
-                "fields": [
-                  {"name": "Branch", "value": "${{ github.ref_name }}", "inline": true},
-                  {"name": "Commit", "value": "${{ github.sha }}", "inline": true},
-                  {"name": "Autor", "value": "${{ github.actor }}", "inline": true},
-                  {"name": "Workflow", "value": "[Ver logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})", "inline": false}
-                ],
-                "footer": {"text": "GitHub Actions - Testes"}
-              }]
-            }' "$DISCORD_WEBHOOK_URL"
+            SHORT_SHA="${COMMIT:0:7}"
+            COMMIT_URL="${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+            PAYLOAD=$(jq -n \
+              --arg branch "$BRANCH" \
+              --arg actor "$ACTOR" \
+              --arg commit_msg "$COMMIT_MSG" \
+              --arg run_url "$RUN_URL" \
+              --arg commit_url "$COMMIT_URL" \
+              --arg short_sha "$SHORT_SHA" \
+              --arg run_number "#$RUN_NUMBER" \
+              --arg repo "$REPO" \
+              '{embeds:[{title:"Testes concluidos com sucesso",description:("Repositorio: "+$repo),color:3066993,fields:[{name:"Branch",value:$branch,inline:true},{name:"Run",value:$run_number,inline:true},{name:"Autor",value:$actor,inline:true},{name:"Commit",value:("["+$short_sha+"]("+$commit_url+")"),inline:true},{name:"Mensagem",value:$commit_msg,inline:false},{name:"Workflow",value:("[Ver logs]("+$run_url+")"),inline:false}],footer:{text:"GitHub Actions - Testes"}}]}')
+            curl -sS -H "Content-Type: application/json" -d "$PAYLOAD" "$DISCORD_WEBHOOK_URL"
           fi
 
       - name: Notify Discord - Tests Failure
         if: failure()
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          BRANCH: ${{ github.ref_name }}
+          COMMIT: ${{ github.sha }}
+          ACTOR: ${{ github.actor }}
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          RUN_NUMBER: ${{ github.run_number }}
         run: |
           if [ -n "$DISCORD_WEBHOOK_URL" ]; then
-            curl -sS -H "Content-Type: application/json" -d '{
-              "embeds": [{
-                "title": "Testes falharam",
-                "description": "Um ou mais testes (unitários ou E2E) falharam. Verifique os logs do job de testes.",
-                "color": 15158332,
-                "fields": [
-                  {"name": "Branch", "value": "${{ github.ref_name }}", "inline": true},
-                  {"name": "Commit", "value": "${{ github.sha }}", "inline": true},
-                  {"name": "Autor", "value": "${{ github.actor }}", "inline": true},
-                  {"name": "Workflow", "value": "[Ver logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})", "inline": false}
-                ],
-                "footer": {"text": "GitHub Actions - Testes"}
-              }]
-            }' "$DISCORD_WEBHOOK_URL"
+            SHORT_SHA="${COMMIT:0:7}"
+            COMMIT_URL="${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+            PAYLOAD=$(jq -n \
+              --arg branch "$BRANCH" \
+              --arg actor "$ACTOR" \
+              --arg commit_msg "$COMMIT_MSG" \
+              --arg run_url "$RUN_URL" \
+              --arg commit_url "$COMMIT_URL" \
+              --arg short_sha "$SHORT_SHA" \
+              --arg run_number "#$RUN_NUMBER" \
+              --arg repo "$REPO" \
+              '{embeds:[{title:"Testes falharam",description:("Repositorio: "+$repo),color:15158332,fields:[{name:"Branch",value:$branch,inline:true},{name:"Run",value:$run_number,inline:true},{name:"Autor",value:$actor,inline:true},{name:"Commit",value:("["+$short_sha+"]("+$commit_url+")"),inline:true},{name:"Mensagem do commit",value:$commit_msg,inline:false},{name:"Ver logs",value:("[Clique aqui]("+$run_url+")"),inline:false}],footer:{text:"GitHub Actions - Testes"}}]}')
+            curl -sS -H "Content-Type: application/json" -d "$PAYLOAD" "$DISCORD_WEBHOOK_URL"
           fi
