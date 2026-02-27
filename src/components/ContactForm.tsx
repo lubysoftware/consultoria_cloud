@@ -229,7 +229,7 @@ export const ContactForm = () => {
                   className="w-full h-12 rounded-full border-primary text-primary-foreground bg-transparent hover:bg-primary/10"
                   size="lg"
                   disabled={isSubmitting}
-                  onClick={() => window.open("https://schedule.luby.co", "_blank")}
+                  onClick={() => window.open("https://agendamento.luby.com.br", "_blank")}
                 >
                   {landingConfig.contactForm.ctaSchedule}
                 </Button>
