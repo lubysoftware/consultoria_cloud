@@ -32,6 +32,13 @@ test.describe("Formulário de contato", () => {
     await page.goto("/");
     await page.locator("#contato").scrollIntoViewIfNeeded();
 
+    const responsePromise = page.waitForResponse(
+      (res) =>
+        res.url().includes("contacts-landings-br") &&
+        res.request().method() === "POST",
+      { timeout: 15_000 }
+    );
+
     await page.getByPlaceholder("Nome completo").fill("TESTE Karime");
     await page.getByPlaceholder("E-mail").fill("karime.kumagai@luby.com.br");
     await page.getByPlaceholder("(00) 00000-0000").fill("44998885133");
@@ -39,7 +46,18 @@ test.describe("Formulário de contato", () => {
 
     await page.locator("#contato form button[type='submit']").click();
 
+    const response = await responsePromise;
+    const status = response.status();
+    const body = await response.text();
+    if (process.env.E2E_MOCK_API !== "1") {
+      console.log("[E2E real API] POST contacts-landings-br → status:", status, "body:", body);
+    }
+
     await expect(page.getByText("Mensagem enviada!").first()).toBeVisible({ timeout: 10_000 });
+
+    if (process.env.E2E_MOCK_API !== "1" && status !== 200) {
+      throw new Error(`Edge function retornou ${status}. Body: ${body}`);
+    }
   });
 
   test("mostra erro ao enviar com telefone inválido", async ({ page }) => {
