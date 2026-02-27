@@ -18,7 +18,7 @@ test.describe("Formulário de contato", () => {
   });
 
   test("exibe os 4 campos e o botão de envio", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("");
     await page.locator("#contato").scrollIntoViewIfNeeded();
 
     await expect(page.getByPlaceholder("Nome completo")).toBeVisible();
@@ -29,7 +29,7 @@ test.describe("Formulário de contato", () => {
   });
 
   test("preenche e envia o formulário com sucesso", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("");
     await page.locator("#contato").scrollIntoViewIfNeeded();
 
     const responsePromise = page.waitForResponse(
@@ -61,7 +61,7 @@ test.describe("Formulário de contato", () => {
   });
 
   test("mostra erro ao enviar com telefone inválido", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("");
     await page.locator("#contato").scrollIntoViewIfNeeded();
 
     await page.getByPlaceholder("Nome completo").fill("TESTE Karime");
