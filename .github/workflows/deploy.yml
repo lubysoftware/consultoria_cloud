@@ -86,17 +86,18 @@ jobs:
           echo "Build artifacts:"
           ls -lah ${{ env.BUILD_DIR }}
 
-      - name: Copy build files to server
-        uses: appleboy/scp-action@v0.1.7
-        continue-on-error: true
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.SSH_PORT || 22 }}
-          source: "dist/*"
-          target: "${{ secrets.DEPLOY_PATH }}"
-          rm: true
+      - name: Copy build files to server (rsync)
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          SSH_PORT: ${{ secrets.SSH_PORT || 22 }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq sshpass rsync
+          mkdir -p ~/.ssh && ssh-keyscan -p "${SSH_PORT}" -H "${SSH_HOST}" >> ~/.ssh/known_hosts 2>/dev/null || true
+          sshpass -p "${SSH_PASSWORD}" rsync -avz --delete --rsh="ssh -p ${SSH_PORT} -o StrictHostKeyChecking=no" \
+            dist/ "${SSH_USER}@${SSH_HOST}:${DEPLOY_PATH}/"
 
       - name: Deployment summary
         run: |
@@ -198,6 +199,14 @@ jobs:
           E2E_BASE_URL: ${{ secrets.APP_URL }}
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
 
       - name: Notify Discord - Tests Success
         if: success()
