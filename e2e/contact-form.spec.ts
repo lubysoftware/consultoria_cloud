@@ -21,7 +21,8 @@ test.describe("Formulário de contato", () => {
     await page.goto("");
     await page.locator("#contato").scrollIntoViewIfNeeded();
 
-    await expect(page.getByPlaceholder("Nome completo")).toBeVisible();
+    await expect(page.getByPlaceholder("Primeiro nome")).toBeVisible();
+    await expect(page.getByPlaceholder("Sobrenome")).toBeVisible();
     await expect(page.getByPlaceholder("E-mail")).toBeVisible();
     await expect(page.getByPlaceholder("(00) 00000-0000")).toBeVisible();
     await expect(page.getByPlaceholder("Descreva sua necessidade ou dúvida")).toBeVisible();
@@ -39,7 +40,8 @@ test.describe("Formulário de contato", () => {
       { timeout: 15_000 }
     );
 
-    await page.getByPlaceholder("Nome completo").fill("TESTE Karime");
+    await page.getByPlaceholder("Primeiro nome").fill("TESTE");
+    await page.getByPlaceholder("Sobrenome").fill("Karime");
     await page.getByPlaceholder("E-mail").fill("karime.kumagai@luby.com.br");
     await page.getByPlaceholder("(00) 00000-0000").fill("44998885133");
     await page.getByPlaceholder("Descreva sua necessidade ou dúvida").fill("pipipopo pipipopo");
@@ -64,7 +66,8 @@ test.describe("Formulário de contato", () => {
     await page.goto("");
     await page.locator("#contato").scrollIntoViewIfNeeded();
 
-    await page.getByPlaceholder("Nome completo").fill("TESTE Karime");
+    await page.getByPlaceholder("Primeiro nome").fill("TESTE");
+    await page.getByPlaceholder("Sobrenome").fill("Karime");
     await page.getByPlaceholder("E-mail").fill("karime.kumagai@luby.com.br");
     await page.getByPlaceholder("(00) 00000-0000").fill("123");
     await page.locator("#contato form button[type='submit']").click();

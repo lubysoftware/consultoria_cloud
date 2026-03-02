@@ -16,7 +16,7 @@ describe("ContactForm", () => {
     });
   });
 
-  it("renders form with 4 fields and submit button", () => {
+  it("renders form with 5 fields and submit button", () => {
     render(<ContactForm />);
     expect(screen.getByPlaceholderText(/nome completo/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/e-mail/i)).toBeInTheDocument();
