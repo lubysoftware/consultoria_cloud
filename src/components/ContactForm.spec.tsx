@@ -18,7 +18,8 @@ describe("ContactForm", () => {
 
   it("renders form with 5 fields and submit button", () => {
     render(<ContactForm />);
-    expect(screen.getByPlaceholderText(/nome completo/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/primeiro nome/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/sobrenome/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/e-mail/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/\(00\) 00000-0000/)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/descreva sua necessidade/i)).toBeInTheDocument();
@@ -28,15 +29,19 @@ describe("ContactForm", () => {
 
   it("has required attribute on name, email and phone", () => {
     render(<ContactForm />);
-    expect(screen.getByPlaceholderText(/nome completo/i)).toBeRequired();
+    expect(screen.getByPlaceholderText(/primeiro nome/i)).toBeRequired();
+    expect(screen.getByPlaceholderText(/sobrenome/i)).toBeRequired();
     expect(screen.getByPlaceholderText(/e-mail/i)).toBeRequired();
     expect(screen.getByPlaceholderText(/\(00\) 00000-0000/)).toBeRequired();
   });
 
   it("submits with correct payload and headers when filled with test data", async () => {
     render(<ContactForm />);
-    fireEvent.change(screen.getByPlaceholderText(/nome completo/i), {
-      target: { value: "TESTE Karime" },
+    fireEvent.change(screen.getByPlaceholderText(/primeiro nome/i), {
+      target: { value: "TESTE" },
+    });
+    fireEvent.change(screen.getByPlaceholderText(/sobrenome/i), {
+      target: { value: "Karime" },
     });
     fireEvent.change(screen.getByPlaceholderText(/e-mail/i), {
       target: { value: "karime.kumagai@luby.com.br" },
@@ -65,6 +70,7 @@ describe("ContactForm", () => {
     const body = JSON.parse((fetch as ReturnType<typeof vi.fn>).mock.calls[0][1].body);
     expect(body.origin_url).toBe("https://example.com/consultoria-cloud");
     expect(body.name).toBe("TESTE Karime");
+    expect(body.last_name).toBe("Karime");
     expect(body.email).toBe("karime.kumagai@luby.com.br");
     expect(body.phone).toBe("44998885133");
     expect(body.message).toBe("pipipopo pipipopo");
@@ -72,6 +78,7 @@ describe("ContactForm", () => {
     expect(body.raw_payload).toEqual(
       expect.objectContaining({
         name: "TESTE Karime",
+        last_name: "Karime",
         email: "karime.kumagai@luby.com.br",
         phone: "44998885133",
         message: "pipipopo pipipopo",

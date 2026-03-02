@@ -18,7 +18,8 @@ const benefits = landingConfig.contactForm.benefits.map((benefit, index) => ({
 }));
 
 const initialFormData = {
-  name: "",
+  firstName: "",
+  lastName: "",
   email: "",
   phone: "",
   message: "",
@@ -32,14 +33,16 @@ export const ContactForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const name = formData.name.trim();
+    const firstName = formData.firstName.trim();
+    const lastName  = formData.lastName.trim();
+    const name      = [firstName, lastName].filter(Boolean).join(" ");
     const email = formData.email.trim();
     const phoneRaw = formData.phone.trim();
 
-    if (!name || !email || !phoneRaw) {
+    if (!firstName || !lastName || !email || !phoneRaw) {
       toast({
         title: "Campos obrigatórios",
-        description: "Preencha nome, e-mail e telefone.",
+        description: "Preencha nome, sobrenome, e-mail e telefone.",
         variant: "destructive",
       });
       return;
@@ -72,6 +75,7 @@ export const ContactForm = () => {
       const payload = {
         origin_url: originUrl,
         name,
+        last_name: lastName,
         email,
         phone: normalizedPhone,
         company_name: null,
@@ -82,6 +86,7 @@ export const ContactForm = () => {
         urgency: null,
         raw_payload: {
           name,
+          last_name: lastName,
           email,
           phone: normalizedPhone,
           message: formData.message?.trim() || null,
@@ -168,15 +173,27 @@ export const ContactForm = () => {
 
           <div className="bg-card rounded-2xl border border-border/50 p-6 md:p-8">
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <Label className="text-sm text-foreground mb-2 block">Nome completo *</Label>
-                <Input
-                  placeholder="Nome completo"
-                  required
-                  className="bg-input border-border/50"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label className="text-sm text-foreground mb-2 block">Nome *</Label>
+                  <Input
+                    placeholder="Primeiro nome"
+                    required
+                    className="bg-input border-border/50"
+                    value={formData.firstName}
+                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <Label className="text-sm text-foreground mb-2 block">Sobrenome *</Label>
+                  <Input
+                    placeholder="Sobrenome"
+                    required
+                    className="bg-input border-border/50"
+                    value={formData.lastName}
+                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                  />
+                </div>
               </div>
 
               <div>
