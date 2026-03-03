@@ -24,8 +24,6 @@ dist-ssr
 *.sw?
 
 # Environment and secrets
-.env
-.env.*
 !.env.example
 
 # Playwright
@@ -37,3 +35,4 @@ playwright/.cache
 .cursor
 .agents
 .claude
+config.bat
