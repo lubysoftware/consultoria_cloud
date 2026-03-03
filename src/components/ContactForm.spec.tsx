@@ -69,7 +69,7 @@ describe("ContactForm", () => {
     );
     const body = JSON.parse((fetch as ReturnType<typeof vi.fn>).mock.calls[0][1].body);
     expect(body.origin_url).toBe("https://example.com/consultoria-cloud");
-    expect(body.name).toBe("TESTE Karime");
+    expect(body.name).toBe("TESTE");
     expect(body.last_name).toBe("Karime");
     expect(body.email).toBe("karime.kumagai@luby.com.br");
     expect(body.phone).toBe("44998885133");
@@ -77,7 +77,7 @@ describe("ContactForm", () => {
     expect(body.profile).toBe(FORM_PROFILE);
     expect(body.raw_payload).toEqual(
       expect.objectContaining({
-        name: "TESTE Karime",
+        name: "TESTE",
         last_name: "Karime",
         email: "karime.kumagai@luby.com.br",
         phone: "44998885133",

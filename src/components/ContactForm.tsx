@@ -35,7 +35,7 @@ export const ContactForm = () => {
 
     const firstName = formData.firstName.trim();
     const lastName  = formData.lastName.trim();
-    const name      = [firstName, lastName].filter(Boolean).join(" ");
+    const name      = firstName;
     const email = formData.email.trim();
     const phoneRaw = formData.phone.trim();
 
